@@ -5,7 +5,8 @@
     if ([SCIUtils getBoolPref:@"shh_mode_confirm"]) {
         NSLog(@"[SCInsta] Confirm shh mode triggered");
 
-        [SCIUtils showConfirmation:^(void) { %orig; }];
+        void (^confirmBlock)(void) = ^{ %orig; };
+        [SCIUtils showConfirmation:confirmBlock];
     } else {
         return %orig;
     }
@@ -15,7 +16,8 @@
     if ([SCIUtils getBoolPref:@"shh_mode_confirm"]) {
         NSLog(@"[SCInsta] Confirm shh mode triggered");
 
-        [SCIUtils showConfirmation:^(void) { %orig; }];
+        void (^confirmBlock)(void) = ^{ %orig; };
+        [SCIUtils showConfirmation:confirmBlock];
     } else {
         return %orig;
     }
@@ -25,7 +27,8 @@
     if ([SCIUtils getBoolPref:@"shh_mode_confirm"]) {
         NSLog(@"[SCInsta] Confirm shh mode triggered");
 
-        [SCIUtils showConfirmation:^(void) { %orig; }];
+        void (^confirmBlock)(void) = ^{ %orig; };
+        [SCIUtils showConfirmation:confirmBlock];
     } else {
         return %orig;
     }

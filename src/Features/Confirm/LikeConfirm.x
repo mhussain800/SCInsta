@@ -8,7 +8,8 @@
     if ([SCIUtils getBoolPref:@"like_confirm"]) {           \
         NSLog(@"[SCInsta] Confirm post like triggered");  \
                                                           \
-        [SCIUtils showConfirmation:^(void) { orig; }];    \
+        void (^confirmBlock)(void) = ^{ orig; };          \
+        [SCIUtils showConfirmation:confirmBlock];         \
     }                                                     \
     else {                                                \
         return orig;                                      \
@@ -18,7 +19,8 @@
     if ([SCIUtils getBoolPref:@"like_confirm_reels"]) {     \
         NSLog(@"[SCInsta] Confirm reels like triggered"); \
                                                           \
-        [SCIUtils showConfirmation:^(void) { orig; }];    \
+        void (^confirmBlock)(void) = ^{ orig; };          \
+        [SCIUtils showConfirmation:confirmBlock];         \
     }                                                     \
     else {                                                \
         return orig;                                      \
