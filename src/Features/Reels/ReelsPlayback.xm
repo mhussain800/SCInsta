@@ -2,14 +2,14 @@
 
 %hook IGSundialPlaybackControlsTestConfiguration
 - (id)initWithLauncherSet:(id)set
-                     tapToPauseEnabled:(_Bool)tapPauseEnabled
-      combineSingleTapPlaybackControls:(_Bool)controls
-        isVideoPreviewThumbnailEnabled:(_Bool)previewThumbEnabled
-                minScrubberDurationSec:(long long)minSec
-         seekResumeScrubberCooldownSec:(double)seekSec
-          tapResumeScrubberCooldownSec:(double)tapSec
-    persistentScrubberMinVideoDuration:(long long)duration
-        isScrubberForShortVideoEnabled:(_Bool)shortScrubberEnabled
+                  tapToPauseEnabled:(_Bool)tapPauseEnabled
+       combineSingleTapPlaybackControls:(_Bool)controls
+         isVideoPreviewThumbnailEnabled:(_Bool)previewThumbEnabled
+                 minScrubberDurationSec:(long long)minSec
+          seekResumeScrubberCooldownSec:(double)seekSec
+           tapResumeScrubberCooldownSec:(double)tapSec
+     persistentScrubberMinVideoDuration:(long long)duration
+         isScrubberForShortVideoEnabled:(_Bool)shortScrubberEnabled
 {
     _Bool userTapPauseEnabled = tapPauseEnabled;
     if ([[SCIUtils getStringPref:@"reels_tap_control"] isEqualToString:@"pause"]) userTapPauseEnabled = true;
@@ -27,6 +27,7 @@
     return %orig(set, userTapPauseEnabled, controls, previewThumbEnabled, userMinSec, seekSec, tapSec, userDuration, userShortScrubberEnabled);
 }
 %end
+
 %hook IGSundialFeedViewController
 - (void)_refreshReelsWithParamsForNetworkRequest:(NSInteger)arg1 userDidPullToRefresh:(BOOL)arg2 {
     if ([SCIUtils getBoolPref:@"prevent_doom_scrolling"]) {
@@ -38,8 +39,8 @@
     if ([SCIUtils getBoolPref:@"refresh_reel_confirm"]) {
         NSLog(@"[SCInsta] Reel refresh triggered");
         
-        [SCIUtils showConfirmation:^(void) {
-            %orig;
+        [SCIUtils showConfirmation:^(void) { 
+            %orig; 
         }
                      cancelHandler:^(void) {
                          IGRefreshControl *_refreshControl = MSHookIvar<IGRefreshControl *>(self, "_refreshControl");
