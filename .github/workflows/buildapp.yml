@@ -26,7 +26,7 @@ concurrency:
 jobs:
   build:
     name: Build SCInsta
-    runs-on: macos-latest
+    runs-on: macos-14
     permissions:
       contents: write
 
