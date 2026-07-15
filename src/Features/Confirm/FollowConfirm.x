@@ -3,15 +3,14 @@
 
 ////////////////////////////////////////////////////////
 
-#define CONFIRMFOLLOW(orig)                            \
-    if ([SCIUtils getBoolPref:@"follow_confirm"]) {             \
-        NSLog(@"[SCInsta] Confirm follow triggered");  \
-                                                       \
-        [SCIUtils showConfirmation:^(void) { orig; }]; \
-    }                                                  \
-    else {                                             \
-        return orig;                                   \
-    }                                                  \
+#define CONFIRMFOLLOW(orig) \
+    if ([SCIUtils getBoolPref:@"follow_confirm"]) { \
+        NSLog(@"[SCInsta] Confirm follow triggered"); \
+        [SCIUtils showConfirmation:^{ orig; }]; \
+    } \
+    else { \
+        orig; \
+    }
 
 ////////////////////////////////////////////////////////
 
@@ -26,7 +25,7 @@
         CONFIRMFOLLOW(%orig);
     }
     else {
-        return %orig;
+        %orig;
     }
 }
 %end
