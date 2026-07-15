@@ -1,25 +1,21 @@
 #import "../../Utils.h"
 
+#define CONFIRM_CALL(orig) \
+    if ([SCIUtils getBoolPref:@"call_confirm"]) { \
+        NSLog(@"[SCInsta] Call confirm triggered"); \
+        [SCIUtils showConfirmation:^{ orig; }]; \
+    } else { \
+        orig; \
+    }
+
 %hook IGDirectThreadCallButtonsCoordinator
 // Voice Call
 - (void)_didTapAudioButton:(id)arg1 {
-    if ([SCIUtils getBoolPref:@"call_confirm"]) {
-        NSLog(@"[SCInsta] Call confirm triggered");
-
-        [SCIUtils showConfirmation:^(void) { %orig; }];
-    } else {
-        return %orig;
-    }
+    CONFIRM_CALL(%orig);
 }
 
 // Video Call
 - (void)_didTapVideoButton:(id)arg1 {
-    if ([SCIUtils getBoolPref:@"call_confirm"]) {
-        NSLog(@"[SCInsta] Call confirm triggered");
-        
-        [SCIUtils showConfirmation:^(void) { %orig; }];
-    } else {
-        return %orig;
-    }
+    CONFIRM_CALL(%orig);
 }
 %end
