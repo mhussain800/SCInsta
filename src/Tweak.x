@@ -656,19 +656,21 @@ shouldPersistLastBugReportId:(id)arg6
 - (void)UFIButtonBarDidTapOnLike:(id)arg1 {
     if ([SCIUtils getBoolPref:@"like_confirm"]) {
         NSLog(@"[SCInsta] Confirm post like triggered");
-        void (^confirmBlock)(void) = ^{ %orig; };
-        [SCIUtils showConfirmation:confirmBlock];
+        [SCIUtils showConfirmation:^(void) { 
+            %orig; 
+        }];
     }
     else {
         %orig;
-    }
+    }  
 }
 
 - (void)UFIButtonBarDidTapOnRepost:(id)arg1 {
     if ([SCIUtils getBoolPref:@"repost_confirm"]) {
         NSLog(@"[SCInsta] Confirm repost triggered");
-        void (^confirmBlock)(void) = ^{ %orig; };
-        [SCIUtils showConfirmation:confirmBlock];
+        [SCIUtils showConfirmation:^(void) { 
+            %orig; 
+        }];
     }
     else {
         %orig;
@@ -697,8 +699,9 @@ shouldPersistLastBugReportId:(id)arg6
 - (void)_didTapLikeButton:(id)arg1 {
     if ([SCIUtils getBoolPref:@"like_confirm_reels"]) {
         NSLog(@"[SCInsta] Confirm reels like triggered");
-        void (^confirmBlock)(void) = ^{ %orig; };
-        [SCIUtils showConfirmation:confirmBlock];
+        [SCIUtils showConfirmation:^(void) { 
+            %orig; 
+        }];
     }
     else {
         %orig;
@@ -717,8 +720,9 @@ shouldPersistLastBugReportId:(id)arg6
 - (void)_didTapRepostButton:(id)arg1 {
     if ([SCIUtils getBoolPref:@"repost_confirm"]) {
         NSLog(@"[SCInsta] Confirm repost triggered");
-        void (^confirmBlock)(void) = ^{ %orig; };
-        [SCIUtils showConfirmation:confirmBlock];
+        [SCIUtils showConfirmation:^(void) { 
+            %orig; 
+        }];
     }
     else {
         %orig;
@@ -770,8 +774,5 @@ shouldPersistLastBugReportId:(id)arg6
     }
 
     return %orig;
-}
-%end
- return %orig;
 }
 %end

@@ -7,8 +7,7 @@
     if ([SCIUtils getBoolPref:@"follow_confirm"]) {             \
         NSLog(@"[SCInsta] Confirm follow triggered");  \
                                                        \
-        void (^confirmBlock)(void) = ^{ orig; };       \
-        [SCIUtils showConfirmation:confirmBlock];      \
+        [SCIUtils showConfirmation:^(void) { orig; }]; \
     }                                                  \
     else {                                             \
         return orig;                                   \

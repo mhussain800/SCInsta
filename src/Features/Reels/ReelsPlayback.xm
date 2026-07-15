@@ -39,12 +39,14 @@
     if ([SCIUtils getBoolPref:@"refresh_reel_confirm"]) {
         NSLog(@"[SCInsta] Reel refresh triggered");
         
-        void (^confirmBlock)(void) = ^{ %orig; };
-        void (^cancelBlock)(void) = ^{
-            IGRefreshControl *_refreshControl = MSHookIvar<IGRefreshControl *>(self, "_refreshControl");
-            [self refreshControlDidEndFinishLoadingAnimation:_refreshControl];
-        };
-        [SCIUtils showConfirmation:confirmBlock cancelHandler:cancelBlock title:@"Refresh Reels"];
+        [SCIUtils showConfirmation:^(void) { 
+            %orig; 
+        }
+                     cancelHandler:^(void) {
+                         IGRefreshControl *_refreshControl = MSHookIvar<IGRefreshControl *>(self, "_refreshControl");
+                         [self refreshControlDidEndFinishLoadingAnimation:_refreshControl];
+                     }
+                             title:@"Refresh Reels"];
     } else {
         %orig;
     }

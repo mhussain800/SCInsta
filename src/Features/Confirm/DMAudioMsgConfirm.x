@@ -6,8 +6,7 @@
     if ([SCIUtils getBoolPref:@"voice_message_confirm"]) {
         NSLog(@"[SCInsta] DM audio message confirm triggered");
 
-        void (^confirmBlock)(void) = ^{ %orig; };
-        [SCIUtils showConfirmation:confirmBlock];
+        [SCIUtils showConfirmation:^(void) { %orig; }];
     } else {
         return %orig;
     }
@@ -31,8 +30,7 @@
     if ([SCIUtils getBoolPref:@"voice_message_confirm"]) {
         NSLog(@"[SCInsta] DM audio message confirm triggered");
 
-        void (^confirmBlock)(void) = ^{ %orig; };
-        [SCIUtils showConfirmation:confirmBlock];
+        [SCIUtils showConfirmation:^(void) { %orig; }];
     } else {
         return %orig;
     }
