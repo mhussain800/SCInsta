@@ -3,25 +3,25 @@
 %hook IGDirectThreadCallButtonsCoordinator
 // Voice Call
 - (void)_didTapAudioButton:(id)arg1 {
-    void (^origBlock)(void) = ^{ %orig; };
-    
     if ([SCIUtils getBoolPref:@"call_confirm"]) {
         NSLog(@"[SCInsta] Call confirm triggered");
-        [SCIUtils showConfirmation:origBlock];
+        [SCIUtils showConfirmation:^(void) {
+            %orig;
+        }];
     } else {
-        origBlock();
+        %orig;
     }
 }
 
 // Video Call
 - (void)_didTapVideoButton:(id)arg1 {
-    void (^origBlock)(void) = ^{ %orig; };
-    
     if ([SCIUtils getBoolPref:@"call_confirm"]) {
         NSLog(@"[SCInsta] Call confirm triggered");
-        [SCIUtils showConfirmation:origBlock];
+        [SCIUtils showConfirmation:^(void) {
+            %orig;
+        }];
     } else {
-        origBlock();
+        %orig;
     }
 }
 %end
