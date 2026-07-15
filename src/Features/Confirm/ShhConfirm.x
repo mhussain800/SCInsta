@@ -1,23 +1,27 @@
 #import "../../Utils.h"
 
-#define CONFIRM_SHH(orig) \
-    if ([SCIUtils getBoolPref:@"shh_mode_confirm"]) { \
-        NSLog(@"[SCInsta] Confirm shh mode triggered"); \
-        [SCIUtils showConfirmation:^{ orig; }]; \
-    } else { \
-        orig; \
+static void confirmShh(void (^origBlock)(void)) {
+    if ([SCIUtils getBoolPref:@"shh_mode_confirm"]) {
+        NSLog(@"[SCInsta] Confirm shh mode triggered");
+        [SCIUtils showConfirmation:origBlock];
+    } else {
+        origBlock();
     }
+}
 
 %hook IGDirectThreadViewController
 - (void)swipeableScrollManagerDidEndDraggingAboveSwipeThreshold:(id)arg1 {
-    CONFIRM_SHH(%orig);
+    void (^origBlock)(void) = ^{ %orig; };
+    confirmShh(origBlock);
 }
 
 - (void)shhModeTransitionButtonDidTap:(id)arg1 {
-    CONFIRM_SHH(%orig);
+    void (^origBlock)(void) = ^{ %orig; };
+    confirmShh(origBlock);
 }
 
 - (void)messageListViewControllerDidToggleShhMode:(id)arg1 {
-    CONFIRM_SHH(%orig);
+    void (^origBlock)(void) = ^{ %orig; };
+    confirmShh(origBlock);
 }
 %end
