@@ -4,25 +4,23 @@
 
 // Confirmation handlers
 
-#define CONFIRMPOSTLIKE(orig)                             \
-    if ([SCIUtils getBoolPref:@"like_confirm"]) {           \
-        NSLog(@"[SCInsta] Confirm post like triggered");  \
-                                                          \
-        [SCIUtils showConfirmation:^(void) { orig; }];    \
-    }                                                     \
-    else {                                                \
-        return orig;                                      \
-    }                                                     \
+#define CONFIRMPOSTLIKE(orig) \
+    if ([SCIUtils getBoolPref:@"like_confirm"]) { \
+        NSLog(@"[SCInsta] Confirm post like triggered"); \
+        [SCIUtils showConfirmation:^{ orig; }]; \
+    } \
+    else { \
+        orig; \
+    }
 
-#define CONFIRMREELSLIKE(orig)                            \
-    if ([SCIUtils getBoolPref:@"like_confirm_reels"]) {     \
+#define CONFIRMREELSLIKE(orig) \
+    if ([SCIUtils getBoolPref:@"like_confirm_reels"]) { \
         NSLog(@"[SCInsta] Confirm reels like triggered"); \
-                                                          \
-        [SCIUtils showConfirmation:^(void) { orig; }];    \
-    }                                                     \
-    else {                                                \
-        return orig;                                      \
-    }                                                     \
+        [SCIUtils showConfirmation:^{ orig; }]; \
+    } \
+    else { \
+        orig; \
+    }
 
 ///////////////////////////////////////////////////////////
 
