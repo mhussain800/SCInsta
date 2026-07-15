@@ -1,19 +1,16 @@
 #import "../../Utils.h"
 
-static void confirmAudio(void (^origBlock)(void)) {
-    if ([SCIUtils getBoolPref:@"voice_message_confirm"]) {
-        NSLog(@"[SCInsta] DM audio message confirm triggered");
-        [SCIUtils showConfirmation:origBlock];
-    } else {
-        origBlock();
-    }
-}
-
 // Legacy hook (for non ai voices interface)
 %hook IGDirectThreadViewController
 - (void)voiceRecordViewController:(id)arg1 didRecordAudioClipWithURL:(id)arg2 waveform:(id)arg3 duration:(CGFloat)arg4 entryPoint:(NSInteger)arg5 {
-    void (^origBlock)(void) = ^{ %orig; };
-    confirmAudio(origBlock);
+    if ([SCIUtils getBoolPref:@"voice_message_confirm"]) {
+        NSLog(@"[SCInsta] DM audio message confirm triggered");
+        [SCIUtils showConfirmation:^(void) {
+            %orig;
+        }];
+    } else {
+        %orig;
+    }
 }
 %end
 
@@ -30,7 +27,13 @@ static void confirmAudio(void (^origBlock)(void)) {
 // Demangled name: IGDirectAIVoiceUIKit.CompactBarContentView
 %hook _TtC20IGDirectAIVoiceUIKitP33_5754F7617E0D924F9A84EFA352BBD29A21CompactBarContentView
 - (void)didTapSend {
-    void (^origBlock)(void) = ^{ %orig; };
-    confirmAudio(origBlock);
+    if ([SCIUtils getBoolPref:@"voice_message_confirm"]) {
+        NSLog(@"[SCInsta] DM audio message confirm triggered");
+        [SCIUtils showConfirmation:^(void) {
+            %orig;
+        }];
+    } else {
+        %orig;
+    }
 }
 %end
